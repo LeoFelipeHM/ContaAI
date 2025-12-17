@@ -1,0 +1,35 @@
+# Como rodar o app localmente (Docker + PostgreSQL)
+
+Este guia descreve o passo a passo para subir o projeto corretamente usando Docker, Docker Compose e PostgreSQL.
+
+## Pré-requisitos
+
+- Docker
+- Docker Compose
+- Git
+
+## Passo a passo
+
+1. Crie um arquivo `.env` dentro da pasta backend.
+2. Copie o arquivo `docker-compose.yml` para a raiz do projeto (caso ainda não esteja lá).
+3. Crie o volume de dados do PostgreSQL executando:
+   docker volume create postgres_data
+4. Faça o build das imagens Docker:
+   docker compose build
+5. Suba os containers:
+   docker compose up
+6. Acesse o banco de dados PostgreSQL (via container ou cliente externo).
+7. Crie o schema/modelo no banco dentro do schema `public`.
+   - O arquivo SQL do modelo está localizado na pasta `/docs`.
+8. Dentro da pasta `backend`, crie o arquivo `.env` com as variáveis necessárias (ex: DATABASE_URL, GOOGLE_API_KEY, SECRET_KEY, etc).
+9. Com tudo configurado, suba novamente o projeto:
+   docker compose up
+10. O backend estará disponível via Uvicorn conforme configurado no Docker Compose.
+
+## Observações
+
+- Sempre que alterar dependências, execute novamente `docker compose build`.
+- O volume `postgres_data` garante que os dados do banco persistam entre reinicializações.
+- Certifique-se de que as portas configuradas no `docker-compose.yml` não estejam em uso.
+
+Pronto! O app estará rodando corretamente
